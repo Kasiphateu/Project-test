@@ -1,0 +1,48 @@
+
+##1
+
+LOAD DATA INFILE 'path/to/myfile.csv'
+INTO TABLE table_name
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+##2
+CREATE TABLE total_netsale (
+customer_id Integer,
+first_name Varchar(300),
+last_name Varchar(300),
+total_sale_thb Float,
+shipping_thb Float,
+tax_thb Float,
+created_date Datetime (UTC+7),
+updated_date Datetime (UTC+7)
+);
+
+## 3
+select customer_id ,
+       first_name ,
+       last_name ,
+       sum(total_sale_thb) as sum_total,
+       sum(shipping_thb) as sum_shipping ,
+       sum(tax_thb) as sum_tax,
+from total_netsale
+group by customer_id,
+         first_name,
+         last_name
+         
+## 4
+ALTER TABLE total_netsale
+ADD COLUMN created_date Datetime,
+ADD COLUMN updated_date Datetime;
+
+## 5 
+LOAD DATA INFILE 'path/to/product.csv'
+INTO TABLE table_name
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+SET name = REPLACE(name, '^un^', '');
+
